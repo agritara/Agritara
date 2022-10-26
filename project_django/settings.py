@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'example_app',
-    'pemda_home'
+    'main_page',
+    'user',
+    'pemda_home',
+    'petani_home',
+    'add_item',
+    'req_item',
 ]
 
 MIDDLEWARE = [
