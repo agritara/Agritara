@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ExampleAppConfig(AppConfig):
+class ReqItemConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'example_app'
+    name = 'req_item'
