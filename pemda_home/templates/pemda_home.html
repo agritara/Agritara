@@ -3,34 +3,230 @@
 
 {% block meta %}
 <title>Home</title>
-<script></script>
+
+<style>
+  {% comment %} #contact-bgimg {
+    background-image: url("{% static "img/contact-card.png" %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+  } {% endcomment %}
+  #bgimg {
+    background-image: url("{% static "img/padi.jpg" %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .table {
+    height: 15px;
+  }
+  .table-content {
+    height: 250px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-base-color: gold;
+    font-family: sans-serif;
+    padding: 10px;
+  }
+  .body {
+    background-image: url("{% static "img/textured-gray.png" %}");
+    height: 100vh;
+    word-wrap: break-word;
+  }
+  .text-md {
+    font-size: 20px;
+  }
+  .text-sm {
+    font-size: 18px;
+  }
+  .text-bold {
+    font-weight: bold;
+  }
+  .navbar {
+    box-shadow: 0px 2px 5px #666;
+  }
+  button {
+    width: 150px;
+  }
+  h2 {
+    font-size: 40px;
+  }
+  h1 {
+    font-size: 100px;
+    border-style: dashed;
+  }
+</style>
+
+<script>
+  $(document).ready(function() {
+    {% comment %} get nama user logged in {% endcomment %}
+
+    $('.table-content').hide();
+    $('.table').append(`
+    <div class="row text-bold text-md bg-success">
+      <div class="col">
+        Nama Barang
+      </div>
+      <div class="col">
+        Jumlah Barang
+      </div>
+      <div class="col">
+        Tanggal Pesan
+      </div>
+      <div class="col-1"></div>
+    </div>
+    `);
+
+    $('.ongoing-button').click(function() {
+      $.get('', function(data) {
+        $('.table-content').show();
+        $('.table-content').text('');
+        $('.table-content').append(`
+        <div class="row text-bold text-md">
+          <div class="col">
+            #
+          </div>
+          <div class="col">
+            #
+          </div>
+          <div class="col">
+            #
+          </div>
+          <div class="col-1"></div>
+        </div>
+        <div style="background-color:black;height:1px;"></div>
+        `);
+        $('.table').text('');
+        $('.table').append(`
+        <div class="row text-bold text-md bg-success">
+          <div class="col">
+            Nama Barang
+          </div>
+          <div class="col">
+            Jumlah Barang
+          </div>
+          <div class="col">
+            Tanggal Pesan
+          </div>
+          <div class="col-1"></div>
+        </div>
+        `);
+      })
+    });
+
+    $('.history-button').click(function() {
+      $.get('', function(data) {
+        $('.table-content').show();
+        $('.table-content').text('');
+        $('.table').text('');
+        $('.table').append(`
+        <div class="row text-bold text-md bg-success">
+          <div class="col">
+            Nama Barang
+          </div>
+          <div class="col">
+            Jumlah Barang
+          </div>
+          <div class="col">
+            Tanggal Terima
+          </div>
+          <div class="col-1"></div>
+        </div>
+        `);
+      })
+    });
+
+    $('.request-button').click(function() {
+      window.location = '#'
+    });
+  })
+</script>  
 {% endblock meta %}
 
 {% block content %}
-<nav class="navbar navbar-expand-lg bg-dark fixed_top" style="--bs-bg-opacity: .4;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <img src="{% static "img/agritara-nav-logo.png" %}" alt="nav-logo">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-          <a class="nav-link" href="/" role="button" aria-haspopup="true" aria-expanded="false">Main Page</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Item</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login/Register</a>
-        </li>
-      </ul>
+<div class="body">
+
+  <nav class="navbar navbar-expand-lg bg-light fixed-top" style="--bs-bg-opacity: .7;">
+    <div class="container-fluid text-dark text-bold">
+      <a class="navbar-brand" href="/">
+        <img src="{% static "img/agritara-nav-logo.png" %}" alt="nav-logo">
+      </a>
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link p-4" href="/" role="button" aria-haspopup="true" aria-expanded="false">Halaman Utama</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link p-4" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home: Pemda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link p-4" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pesan</a>
+          </li>
+        </ul>
+      </div>
+      <div class="justify-content-end">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            Halo, <div id="pemda-name"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="image-fluid" id="bgimg">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <div class="container">
+      <h1 class="text-bold" align="center">PEMDA</h1>
+      <br>
     </div>
   </div>
-</nav>
+  <br>
+  <br>
+
+  <div class="container-sm rounded-3 bg-light" style="--bs-bg-opacity: .4; height: 550px;">
+    <h2 class="text-light text-bold" align="center"><span class="text-warning">Bar</span>ang</h3>
+    <br>
+    <div class="container text-center">
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          <button class="rounded-start ongoing-button">Show Ongoing</a>
+          <button class="rounded-end history-button">Show History</a>
+        </div>
+        <div class="col-md-auto">
+          <button class="rounded-3 request-button">Pesan Barang</a>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <form method="GET">
+        <div class="row justify-content-md-center">
+          <div class="col-auto text-bold text-sm">Cari Barang:</div>
+          <div class="col-6"><input type="text" name="#" class="form-control" placeholder="Nama Barang"></div>
+          
+          <div class="col-auto text-bold text-sm">
+            <button type="submit" class="btn btn-warning" id="submit_search">Cari</button>
+          </div>
+        </div>
+      </form>
+      <br>
+
+      <div class="container bg-light rounded-2" style="height:300px;">
+        <div class="table" align="center"></div>
+        <div class="table-content" align="center"></div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  {% comment %} <div class="image-fluid" id="contact-bgimg"> {% endcomment %}
+
+  </div>
+</div>
 {% endblock content %}
