@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'petani_home',
     'add_item',
     'req_item',
+    'register_login',
 ]
 
 MIDDLEWARE = [
