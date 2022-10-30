@@ -35,20 +35,6 @@ def add_governments_request(request):
     }
     return render(request, 'government_request_page.html', context)
 
-
-    
-    
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
+def goverments_json(request):
+    data = GovReqItem.objects.all()#filter(user=request.user.id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
