@@ -29,32 +29,11 @@ def add_governments_request(request):
             request.save()
             response = HttpResponseRedirect(reverse("req_item:governments_request_page"))
             return response
-    else:
-        print("Form tidak berhasil dibuat")
 
     context = {'form_request':form_request,
     'title':"Tambah Request", 
     }
     return render(request, 'government_request_page.html', context)
-
-def request_add(request):
-    if request.method == 'POST':
-        req = request.POST.get("request")
-        kuantitas = request.POST.get("kuantitas")
-
-        request = GovReqItem.objects.create(req="request", kuantitas="kuantitas")
-        request.save()
-        result = {
-            'fields':{
-                'request': request.request,
-                'kuantitas': request.kuantitas_req,
-            },
-            'pk': request.pk
-        }
-
-        return HttpResponse(b"CREATED", status=200)
-
-    return HttpResponseNotFound()
 
 
     
