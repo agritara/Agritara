@@ -2,6 +2,13 @@
 
 {% block meta %}
 <title>Add Request</title>
+<script>
+    $(document).ready(function() {
+        $('.request-button').click(function() {
+            window.location = '/pemda/'
+        });
+    })
+</script>
 {% endblock meta %} 
 
 {% block content %} 
@@ -36,7 +43,7 @@
 
             <tr>
                 <td></td>
-                <td><input class="btn btn-primary" type="submit" value="Submit" value="post"></td>
+                <td><input class="btn btn-primary request-button" type="submit" value="Submit dan Kembali" value="post"></td>
             </tr> 
     </form>
 
