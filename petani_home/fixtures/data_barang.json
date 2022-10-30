@@ -1,0 +1,31 @@
+[
+    {
+        "model":"petani_home.barangpetani",
+        "pk":1,
+        "fields":{
+            "nama_barang":"Beras",
+            "kuantitas_barang":"1000",
+            "daerah_asal": "Jawa Barat"
+        }
+    },
+
+    {
+        "model":"petani_home.barangpetani",
+        "pk":2,
+        "fields":{
+            "nama_barang":"Kopi",
+            "kuantitas_barang":"500",
+            "daerah_asal": "Jawa Timur"
+        }
+    },
+
+    {
+        "model":"petani_home.barangpetani",
+        "pk":3,
+        "fields":{
+            "nama_barang":"Kapas",
+            "kuantitas_barang":"800",
+            "daerah_asal": "Jawa Tengah"
+        }
+    }
+]
