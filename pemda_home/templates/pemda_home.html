@@ -68,6 +68,25 @@
       <div class="col-1"></div>
     </div>
     `);
+    $.get('/permintaan/req_json/', function(data) {
+      $.each(data, function(key, value) {
+        $('.table-content').append(`
+        <div class="row text-bold text-md">
+          <div class="col">
+            `+ value.fields.request +`
+          </div>
+          <div class="col">
+            `+ value.fields.kuantitas_req +`
+          </div>
+          <div class="col">
+            `+ value.fields.request_date +`
+          </div>
+          <div class="col-1"></div>
+        </div>
+        <div style="background-color:black;height:1px;"></div>
+        `);
+      })
+    });
 
     $('.modal-button').click(function() {
       var html_code = '<select name="item_id" class="form-control" placeholder="Nama Barang">'
@@ -102,7 +121,7 @@
           </div>
           <div style="background-color:black;height:1px;"></div>
           `);
-        })
+        });
         $('.table').text('');
         $('.table').append(`
         <div class="row text-bold text-md bg-warning">
@@ -143,7 +162,7 @@
           </div>
           <div style="background-color:black;height:1px;"></div>
           `);
-        })
+        });
         $('.table').text('');
         $('.table').append(`
         <div class="row text-bold text-md bg-warning">
