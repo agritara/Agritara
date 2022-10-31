@@ -27,7 +27,7 @@ def add_governments_request(request):
             req_pemerintah.kuantitas_req = form_request.cleaned_data['kuantitas_req']
             request = form_request.save(commit=False)
             request.save()
-            response = HttpResponseRedirect(reverse("req_item:governments_request_page"))
+            response = HttpResponseRedirect('/pemda')
             return response
 
     context = {'form_request':form_request,
