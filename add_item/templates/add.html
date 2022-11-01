@@ -25,7 +25,14 @@
     body {
         background-color: #E1FFB1;
     }
+
+    .table {
+        margin: auto;
+        width: 50%; 
+    }
   </style>
+
+  <br>
 
   <div class="d-flex justify-content-center">
     <form id="form" onsubmit="return false;">
@@ -45,17 +52,22 @@
           <input type="text" class="form-control" name="deskripsi" placeholder="Jakarta">
         </div> -->
 
+        <br>
+
         <div class="form-row">
           <div class="d-flex justify-content-center">
             <button id="button" type="submit" value="Submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
+        
     </form>
   </div>
 </div>
 
+<br>
+
 <div class="d-flex justify-content-center">
-  <table id="table"></table>
+  <table id="table" class="table table-striped table-bordered table-hover"></table>
 </div>
 
 <script>
@@ -66,11 +78,13 @@
   async function refreshBarangPetani() {
         document.getElementById("table").innerHTML = ""
         const barang_petani = await getBarangPetani()
-        let htmlString = `<tr>
-          <th>Nama barang</th>
-          <th>Kuantitas barang</th>
-          <th>Asal daerah</th>
-        </tr>`
+        let htmlString = `<thead>
+          <tr>
+            <th scope="col">Nama</th>
+            <th scope="col">Kuantitas</th>
+            <th scope="col">Daerah asal</th>
+          </tr>
+        </thead>`
         barang_petani.forEach((item) => {
           htmlString += `\n<tr>
           <th>${item.fields.nama_barang}</th>
