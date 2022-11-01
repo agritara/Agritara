@@ -16,6 +16,10 @@ def load_page(request):
         item_name = item.request
         item_amount = item.kuantitas_req
         review = request.POST.get('review')
+
+        if review == "" or review == None:
+            review = '-'
+
         OrderHistory.objects.create(item=item_name, item_amount=item_amount, review=review)
 
         item.delete()
