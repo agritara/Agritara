@@ -6,4 +6,4 @@ class OrderHistory(models.Model):
     item = models.CharField(max_length=50)
     item_amount = models.IntegerField()
     closed_date = models.DateField(auto_now_add=True, null=True)
-    review = models.TextField()
+    review = models.TextField(default='0000000')
