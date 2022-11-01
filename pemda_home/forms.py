@@ -3,7 +3,7 @@
 from django.forms import ModelForm
 from .models import OrderHistory
 
-class AddTaskForm(ModelForm):
+class PurchaseHistoryForm(ModelForm):
     class Meta:
         model = OrderHistory
         fields = ['review']

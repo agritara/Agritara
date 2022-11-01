@@ -5,12 +5,6 @@
 <title>Home</title>
 
 <style>
-  {% comment %} #contact-bgimg {
-    background-image: url("{% static "img/contact-card.png" %}");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 400px;
-  } {% endcomment %}
   #bgimg {
     background-image: url("{% static "img/padi.jpg" %}");
     background-repeat: no-repeat;
@@ -60,9 +54,8 @@
   $(document).ready(function() {
     {% comment %} get nama user logged in {% endcomment %}
 
-    $('.table-content').hide();
     $('.table').append(`
-    <div class="row text-bold text-md bg-success">
+    <div class="row text-bold text-md bg-warning">
       <div class="col">
         Nama Barang
       </div>
@@ -75,29 +68,51 @@
       <div class="col-1"></div>
     </div>
     `);
+    $('.table-content').append(`
+    <div class="row text-bold text-md">
+      <div class="col text-secondary">
+        Ketuk 'Show Ongoing' untuk memunculkan daftar pesanan
+      </div>
+    </div>
+    `);
+
+    $('.modal-button').click(function() {
+      var html_code = '<select name="item_id" class="form-control" placeholder="Nama Barang">'
+      $('#options').text('');
+      $.get('/permintaan/req_json/', function(data) {
+        $.each(data, function(key, value) {
+          html_code += `<option value="` + value.pk + `">
+          `+ value.fields.request +`
+          </option>`
+        })
+        html_code += ('</select>')
+        $('#options').html(html_code);
+      });
+    });
 
     $('.ongoing-button').click(function() {
-      $.get('', function(data) {
-        $('.table-content').show();
+      $.get('/permintaan/req_json/', function(data) {
         $('.table-content').text('');
-        $('.table-content').append(`
-        <div class="row text-bold text-md">
-          <div class="col">
-            #
+        $.each(data, function(key, value) {
+          $('.table-content').append(`
+          <div class="row text-bold text-md">
+            <div class="col">
+              `+ value.fields.request +`
+            </div>
+            <div class="col">
+              `+ value.fields.kuantitas_req +`
+            </div>
+            <div class="col">
+              `+ value.fields.request_date +`
+            </div>
+            <div class="col-1"></div>
           </div>
-          <div class="col">
-            #
-          </div>
-          <div class="col">
-            #
-          </div>
-          <div class="col-1"></div>
-        </div>
-        <div style="background-color:black;height:1px;"></div>
-        `);
+          <div style="background-color:black;height:1px;"></div>
+          `);
+        });
         $('.table').text('');
         $('.table').append(`
-        <div class="row text-bold text-md bg-success">
+        <div class="row text-bold text-md bg-warning">
           <div class="col">
             Nama Barang
           </div>
@@ -114,12 +129,31 @@
     });
 
     $('.history-button').click(function() {
-      $.get('', function(data) {
-        $('.table-content').show();
+      $.get('/pemda/history/', function(data) {
         $('.table-content').text('');
+        $.each(data, function(key, value) {
+          $('.table-content').append(`
+          <div class="row text-bold text-md">
+            <div class="col">
+              `+ value.fields.item +`
+            </div>
+            <div class="col">
+              `+ value.fields.item_amount +`
+            </div>
+            <div class="col">
+              `+ value.fields.closed_date +`
+            </div>
+            <div class="col">
+              `+ value.fields.review +`
+            </div>
+            <div class="col-1"></div>
+          </div>
+          <div style="background-color:black;height:1px;"></div>
+          `);
+        });
         $('.table').text('');
         $('.table').append(`
-        <div class="row text-bold text-md bg-success">
+        <div class="row text-bold text-md bg-warning">
           <div class="col">
             Nama Barang
           </div>
@@ -129,6 +163,9 @@
           <div class="col">
             Tanggal Terima
           </div>
+          <div class="col">
+            Review
+          </div>
           <div class="col-1"></div>
         </div>
         `);
@@ -136,16 +173,16 @@
     });
 
     $('.request-button').click(function() {
-      window.location = '#'
+      window.location = '/permintaan/request/'
     });
   })
-</script>  
+</script>
 {% endblock meta %}
 
 {% block content %}
 <div class="body">
 
-  <nav class="navbar navbar-expand-lg bg-light fixed-top" style="--bs-bg-opacity: .7;">
+  {% comment %} <nav class="navbar navbar-expand-lg bg-light fixed-top" style="--bs-bg-opacity: .7;">
     <div class="container-fluid text-dark text-bold">
       <a class="navbar-brand" href="/">
         <img src="{% static "img/agritara-nav-logo.png" %}" alt="nav-logo">
@@ -156,10 +193,10 @@
             <a class="nav-link p-4" href="/" role="button" aria-haspopup="true" aria-expanded="false">Halaman Utama</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link p-4" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home: Pemda</a>
+            <a class="nav-link p-4" href="#" role="button" aria-haspopup="true" aria-expanded="false">Daftar Pembelian</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link p-4" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pesan</a>
+            <a class="nav-link p-4" href="/permintaan/request/" role="button" aria-haspopup="true" aria-expanded="false">Pesan</a>
           </li>
         </ul>
       </div>
@@ -171,7 +208,7 @@
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> {% endcomment %}
   
   <div class="image-fluid" id="bgimg">
     <br>
@@ -202,24 +239,47 @@
         </div>
       </div>
       <br>
-      <br>
-
-      <form method="GET">
-        <div class="row justify-content-md-center">
-          <div class="col-auto text-bold text-sm">Cari Barang:</div>
-          <div class="col-6"><input type="text" name="#" class="form-control" placeholder="Nama Barang"></div>
-          
-          <div class="col-auto text-bold text-sm">
-            <button type="submit" class="btn btn-warning" id="submit_search">Cari</button>
-          </div>
-        </div>
-      </form>
-      <br>
 
       <div class="container bg-light rounded-2" style="height:300px;">
         <div class="table" align="center"></div>
         <div class="table-content" align="center"></div>
       </div>
+      <br>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn text-light btn-secondary rounded-3 modal-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Barang telah diterima?
+      </button>
+      <br>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Terima Barang</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST">
+                {% csrf_token %}
+                <div class="row justify-content-md-center">
+                  <div class="col-auto text-bold text-sm">Pilih Barang:</div>
+                  <div class="col-8">
+                    <div id="options"></div>
+                  </div>
+                </div>
+                <br>
+                <input type="text" name="review" id="form3Example4" class="form-control form-control-lg" placeholder="Note (optional):" />
+                <br>
+                <button type="submit" class="btn btn-primary" id="submit-button" style="width: 160px;">Tutup Pesanan</button>
+                <button type="button" class="btn btn-secondary" style="width: 90px;" data-bs-dismiss="modal">Kembali</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 

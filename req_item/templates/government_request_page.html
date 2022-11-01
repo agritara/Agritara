@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Add Request</title>
+<script>
+    $(document).ready(function() {
+        $('.request-button').click(function() {
+            window.location = '/pemda/'
+        });
+    })
+</script>
+{% endblock meta %} 
+
+{% block content %} 
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class = "form-group">
+
+    <nav class="navbar navbar-expand-lg" style="background-color: #8FBC8F">
+    
+        <div class="container-fluid">
+            <div class = "login container d-flex flex-column justify-content-center align-items-center">
+          <a class="navbar-brand mb-0 h1"style="font-size: 30px">&#9997 Add Request </a>
+          </div>
+        </div>
+      </nav>
+      <style>
+        body {
+            background-color: #E1FFB1;
+        }
+    </style>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+            <div class="form-group">
+                <td>Request: </td>
+                <td>{{form_request.request}}</td>
+            </div>
+                
+            <div class="form-group">
+                <td>Kuantitas (satuan kilogram): </td>
+                <td>{{form_request.kuantitas_req}}</td>
+            </div>
+
+            <tr>
+                <td></td>
+                <td><input class="btn btn-primary request-button" type="submit" value="Submit dan Kembali" value="post"></td>
+            </tr> 
+    </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}     
+        
+</div>
+{% endblock content %}
