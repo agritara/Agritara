@@ -8,8 +8,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from add_item.models import BarangPetani
 
-from petani_home.models import BarangPetani
+# from petani_home.models import BarangPetani
 
 def index(request):
     return render(request, 'index.html')
@@ -27,3 +28,10 @@ def show_barang_petani(request):
         'list_barang': list_barang
     }
     return render(request, 'homepetani.html', context)
+
+def get_data_json_from_tambah(request):
+    list_barang = BarangPetani.objects.all()
+
+    # barang_filtered = list_barang.filter(user=request.user)
+    return HttpResponse(serializers.serialize("json", list_barang), content_type="application/json")
+
