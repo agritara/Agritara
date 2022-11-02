@@ -1,12 +1,23 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 from django.core import serializers
 from .models import OrderHistory
 from .forms import PurchaseHistoryForm
 from req_item.models import GovReqItem
 from add_item.models import BarangPetani
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('todolist:lobby'))
+    response.delete_cookie('last_login')
+    return response
+
+@login_required(login_url='/registerLogin/login/')
 def load_page(request):
     if request.method == "POST":
         # uid = request.user.id
@@ -34,6 +45,7 @@ def load_page(request):
 
     return render(request, 'pemda_home.html')
 
+@login_required(login_url='/registerLogin/login/')
 def load_history(request):
-    data = OrderHistory.objects.all() #filter(user=request.user.id)
+    data = OrderHistory.objects.filter(user=request.COOKIES.get("last_login"))
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
