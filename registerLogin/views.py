@@ -17,18 +17,18 @@ def register(request):
         form = RegisLogForm(request.POST)
         if form.is_valid():
             
-            data_register_login = RegisterLogin.objects.all()
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user_type = request.POST.get('user_type')
-            provinsi = request.POST.get('provinsi')
-            buatAkun = RegisterLogin.objects.create(
-                username = username,
-                password = password,
-                user_type = user_type,
-                provinsi = provinsi
-                )
-            buatAkun.save()
+            #data_register_login = RegisterLogin.objects.all()
+            # username = request.POST.get('username')
+            # password = request.POST.get('password')
+            # user_type = request.POST.get('user_type')
+            # provinsi = request.POST.get('provinsi')
+            # buatAkun = RegisterLogin.objects.create(
+            #     username = username,
+            #     password = password,
+            #     user_type = user_type,
+            #     provinsi = provinsi
+            #     )
+            form.save()
             # if user_type == "PEMDA" or user_type == "pemda":
             #     for user in data_register_login:
             #         print(user.provinsi)
@@ -56,6 +56,7 @@ def login_user(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            print("check")
             login(request, user) # melakukan login terlebih dahulu
             response = HttpResponseRedirect(reverse("registerLogin:show_registerlogin")) # membuat response
             response.set_cookie('last_login', str(datetime.datetime.now())) 
