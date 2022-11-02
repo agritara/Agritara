@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 TIPE_USER = (
     ('petani','PETANI'),
@@ -43,7 +44,6 @@ PROVINSI =(
     ('Papua Selatan','PAPUA SELATAN'),
 )
 class RegisterLogin(models.Model):
-    username = models.CharField(max_length=50)
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
     user_type = models.CharField(max_length=6, choices=TIPE_USER, default='petani')
     provinsi = models.CharField(max_length=38, choices=PROVINSI, default='Aceh')
-    password = models.CharField(max_length=30)
