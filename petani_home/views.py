@@ -14,7 +14,7 @@ from add_item.models import BarangPetani
 
 def index(request):
     return render(request, 'index.html')
-
+ 
 def show_as_json(request):
     list_barang = BarangPetani.objects.all()
 
