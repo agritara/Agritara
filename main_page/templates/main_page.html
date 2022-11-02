@@ -119,65 +119,65 @@
   height: 50px;
   line-height: 50px;
   font-size: 50px;
-}
+  }
 
-.rating label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  cursor: pointer;
-}
+  .rating label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    cursor: pointer;
+  }
 
-.rating label:last-child {
-  position: static;
-}
+  .rating label:last-child {
+    position: static;
+  }
 
-.rating label:nth-child(1) {
-  z-index: 5;
-}
+  .rating label:nth-child(1) {
+    z-index: 5;
+  }
 
-.rating label:nth-child(2) {
-  z-index: 4;
-}
+  .rating label:nth-child(2) {
+    z-index: 4;
+  }
 
-.rating label:nth-child(3) {
-  z-index: 3;
-}
+  .rating label:nth-child(3) {
+    z-index: 3;
+  }
 
-.rating label:nth-child(4) {
-  z-index: 2;
-}
+  .rating label:nth-child(4) {
+    z-index: 2;
+  }
 
-.rating label:nth-child(5) {
-  z-index: 1;
-}
+  .rating label:nth-child(5) {
+    z-index: 1;
+  }
 
-.rating label input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
+  .rating label input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
 
-.rating label .icon {
-  float: left;
-  color: transparent;
-}
+  .rating label .icon {
+    float: left;
+    color: transparent;
+  }
 
-.rating label:last-child .icon {
-  color: #000;
-}
+  .rating label:last-child .icon {
+    color: #000;
+  }
 
-.rating:not(:hover) label input:checked ~ .icon,
-.rating:hover label:hover input ~ .icon {
-  color: #09f;
-}
+  .rating:not(:hover) label input:checked ~ .icon,
+  .rating:hover label:hover input ~ .icon {
+    color: #09f;
+  }
 
-.rating label input:focus:not(:checked) ~ .icon:last-child {
-  color: #000;
-  text-shadow: 0 0 5px #09f;
-}
+  .rating label input:focus:not(:checked) ~ .icon:last-child {
+    color: #000;
+    text-shadow: 0 0 5px #09f;
+  }
   </style>
 </head>
 
@@ -273,6 +273,9 @@
             {% endfor %}
             </table>
           </div>
+          <h1>FEEDBACKS!</h1>
+          <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="{% url 'add_feedback' %}">Add Feedback!</a>
+          <table id="tablefb"></table>
           <h1>Was This Website Helpful?</h1>
           <form class="rating">
             <label>
@@ -311,9 +314,8 @@
               console.log('New star rating: ' + this.value);
             });
           </script>
-          <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="{% url 'add_feedback' %}">Add Feedback!</a>
-          <h1>FEEDBACKS!</h1>
-          <table id="tablefb"></table>
+          
+          
         </div>
     </div>
     
@@ -325,7 +327,8 @@
     async function refreshWishlist() {
           document.getElementById("table1").innerHTML = ""
           const wishlist = await inputanPetani()
-          let htmlString = `<thead>
+          let htmlString = `
+              <thead>
                 <tr>
                   <tr class="thead-dark">
                     <th scope="col" >Nama Petani</th>

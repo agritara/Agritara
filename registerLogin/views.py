@@ -51,19 +51,18 @@ def register(request):
         ('Papua Selatan','PAPUA SELATAN'),
     )
     form = RegisLogForm()
-
     if request.method == "POST":
         form = RegisLogForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Akun telah berhasil dibuat!')
             data_register_login = RegisterLogin.objects.all()
-            for user in data_register_login:
+            #for user in data_register_login:
                 
 
 
         
-        return redirect('pemda_home:login')
+    return redirect('pemda_home:login')
     
 
     context = {'form':form}
