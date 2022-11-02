@@ -59,11 +59,7 @@ def register(request):
             messages.success(request, 'Akun telah berhasil dibuat!')
             data_register_login = RegisterLogin.objects.all()
             for user in data_register_login:
-                
-
-
-        
-        return redirect('pemda_home:login')
+                return redirect('pemda_home:login')
     
 
     context = {'form':form}
