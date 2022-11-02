@@ -19,18 +19,25 @@ def register(request):
         if form.is_valid():
             
             data_register_login = RegisterLogin.objects.all()
-            # username = request.POST.get('username')
-            # password = request.POST.get('password')
+            username = request.POST.get('username')
+            password = request.POST.get('password')
             user_type = request.POST.get('user_type')
             provinsi = request.POST.get('provinsi')
-            if user_type == "PEMDA" or user_type == "pemda":
-                for user in data_register_login:
-                    print(user.provinsi)
-                    if user.user_type == "PEMDA" or user.user_type == "pemda":
-                        if user.provinsi == provinsi:
-                            print("gagal")
-                            return redirect('registerLogin:register')
-            form.save()
+            buatAkun = RegisterLogin.objects.create(
+                username = username,
+                password = password,
+                user_type = user_type,
+                provinsi = provinsi
+                )
+            buatAkun.save()
+            # if user_type == "PEMDA" or user_type == "pemda":
+            #     for user in data_register_login:
+            #         print(user.provinsi)
+            #         if user.user_type == "PEMDA" or user.user_type == "pemda":
+            #             if user.provinsi == provinsi:
+            #                 print("gagal")
+            #                 return redirect('registerLogin:register')
+            # form.save()
             # RegisterLogin.objects.create(username = username, password = password,user_type = user_type,provinsi = provinsi)
             #new_user.save()
             messages.success(request, 'Akun telah berhasil dibuat!')    
@@ -42,15 +49,21 @@ def register(request):
     context = {'form':form}
     return render(request, 'register.html', context)
 
-def login_user(request):
+def login_user(request): 
+    print("berhasil")
     if request.method == 'POST':
+        print("masuk")
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user) # melakukan login terlebih dahulu
             response = HttpResponseRedirect(reverse("registerLogin:show_registerlogin")) # membuat response
-            response.set_cookie('last_login', str(datetime.datetime.now())) #
+            response.set_cookie('last_login', str(datetime.datetime.now())) 
+            return response
+        else:
+            messages.info(request, 'Username atau Password salah!')
+    return render(request,'login.html')
 
 @login_required(login_url='/registerLogin/login/')
 def show_registerlogin(request):
