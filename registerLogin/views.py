@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -19,8 +19,8 @@ def register(request):
         if form.is_valid():
             
             data_register_login = RegisterLogin.objects.all()
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+            # username = request.POST.get('username')
+            # password = request.POST.get('password')
             user_type = request.POST.get('user_type')
             provinsi = request.POST.get('provinsi')
             if user_type == "PEMDA" or user_type == "pemda":
@@ -31,10 +31,10 @@ def register(request):
                             print("gagal")
                             return redirect('registerLogin:register')
             form.save()
-            new_user = RegisterLogin(username = username, password = password,user_type = user_type,provinsi = provinsi)
-            new_user.save()
+            # RegisterLogin.objects.create(username = username, password = password,user_type = user_type,provinsi = provinsi)
+            #new_user.save()
             messages.success(request, 'Akun telah berhasil dibuat!')    
-            user = authenticate(request, user_type=user_type, provinsi=provinsi)
+            # user = authenticate(request, user_type=user_type, provinsi=provinsi)
             print("berhasil")
             return redirect('registerLogin:login')
     
@@ -48,23 +48,15 @@ def login_user(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            response = HttpResponseRedirect(reverse("/"))
-            #response = HttpResponseRedirect('registerLogin:login')
-            response.set_cookie('last_login', str(datetime.datetime.now()))
-            return response
-    
-        else:
-            messages.info(request, 'Username atau Password salah!')
+            login(request, user) # melakukan login terlebih dahulu
+            response = HttpResponseRedirect(reverse("registerLogin:show_registerlogin")) # membuat response
+            response.set_cookie('last_login', str(datetime.datetime.now())) #
 
-    context = {}
-    return render(request, 'login.html', context)
-
-@login_required(login_url='/regsiterLogin/login/')
+@login_required(login_url='/registerLogin/login/')
 def show_registerlogin(request):
     data_register_login = RegisterLogin.objects.all()
     context = {
     'list_registerlogin': data_register_login,
     'last_login': request.COOKIES['last_login'],
 }
-    return render(request, "login.html")
+    return render(request, "baru.html")
