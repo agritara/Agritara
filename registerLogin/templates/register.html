@@ -18,11 +18,8 @@
                     <td></td>
                     <td><input type="submit" name="submit" value="Daftar"/></td>  
                 </tr>  
-            </table> 
-            <h5>Sesi terakhir login: {{ last_login }}</h5>
-            <button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+            </table>  
         </form>
-
 
     {% if messages %}  
         <ul>   

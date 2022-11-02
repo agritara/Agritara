@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RegisternloginConfig(AppConfig):
+class RegisterloginConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'RegisterNLogin'
+    name = 'registerLogin'
