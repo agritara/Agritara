@@ -1,99 +1,84 @@
-{% extends 'base.html' %}
-
-{% block meta %}
+{% extends 'base.html' %} {% block meta %}
 <title>Login</title>
-{% endblock meta %}
+{% endblock meta %} {% block content %}
+  <body>
+    <div class="py-5">
+      <div class="container">
+        <div class="m-3">
+          <h1>Login</h1>
+        </div>
+        <div class="row">
+          <div class="col-m-3 m-3">
+            <div class="card p-3">
+              <div class="card-block">
+                <h4
+                  class="card-title text-center bg-info border border-1 rounded"
+                >
+                  Silakan Login dan List Tugas Anda!
+                </h4>
+                <form method="POST" action="">
+                  {% csrf_token %}
+                  <table>
+                    <tr>
+                      <td>Username:</td>
+                      <td>
+                        <input
+                          type="text"
+                          name="username"
+                          placeholder="Username"
+                          class="form-control"
+                        />
+                      </td>
+                    </tr>
 
-{% block content %}
-<style>
-    body{background-color: ivory;}
-</style>
-<body>
-<nav class = "navbar" style="background-color: lightpink;font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+                    <tr>
+                      <td>Password:</td>
+                      <td>
+                        <input
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          class="form-control"
+                        />
+                      </td>
+                    </tr>
 
-    <div class= "container-fluid">
-        <a class = "navbar-brand mb-0 h1"style = "font-size: 30px">&#128272 LOGIN</a>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <input
+                          class="btn btn-primary"
+                          type="submit"
+                          value="Login"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </form>
+                {% if messages %}
+                <ul>
+                  {% for message in messages %}
+                  <li>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %} Belum mempunyai akun?
+                <button type="button" class="btn btn-warning">
+                  <a class="text-white" href="{% url 'registerLogin:register' %}">
+                    Buat Akun
+                  </a>
+                </button>
+
+                <p class="card-text p-y-1">{{todolist.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</nav>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-alpha.6.min.js"></script>
+  </body>
 
-<div>
-
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table style ="margin-bottom:20px;margin-top:40px;">
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-
-        
-                <!-- <td<b>Types of User: <b>
-                    <select types ="Types of User" class="types-form">
-                        <option value="1">Aceh</option>
-                        <option value="2">Sumatra Utara</option>
-                        <option value="3">Sumatra Barat</option>
-                        <option value="4">Riau</option>
-                        <option value="5">Kepulauan Seribu</option>
-                        <option value="6">Jambi</option>
-                        <option value="7">Bengkulu</option>
-                        <option value="8">Sumatra Selatan</option>
-                        <option value="9">Kepulauan Bangka Belitung</option>
-                        <option value="10">Lampung</option>
-                        <option value="11">Banten</option>
-                        <option value="12">DKI Jakarta</option>
-                        <option value="13">Jawa Barat</option>
-                        <option value="14">Jawa Tengah</option>
-                        <option value="15">Daerah Istimewa Yogyakarta</option>
-                        <option value="16">Jawa Timur</option>
-                        <option value="17">Bali</option>
-                        <option value="18">Nusa Tenggara Barat</option>
-                        <option value="19">Nusa Tenggara Timur</option>
-                        <option value="20">Kalimantan Barat</option>
-                        <option value="21">Kalimantan Tengah</option>
-                        <option value="22">Kalimantan Selatan</option>
-                        <option value="23">Kalimantan Timur</option>
-                        <option value="24">Kalimantan Utara</option>
-                        <option value="25">Sulawesi Barat</option>
-                        <option value="26">Sulawesi Selatan</option>
-                        <option value="27">Sulawesi Tenggara</option>
-                        <option value="28">Sulawesi Tengah</option>
-                        <option value="29">Gorontalo</option>
-                        <option value="30">Sulawesi Utara</option>
-                        <option value="31">Maluku Utara</option>
-                        <option value="32">Maluku</option>
-                        <option value="33">Papua</option>
-                        <option value="34">Papua Tengah</option>
-                        <option value="35">Papua Pegunungan</option>
-                        <option value="36">Papua Selatan</option>
-
-                    </select>
-                </td> -->
-                
-            
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td><input type="submit" class="btn btn-danger" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Belum mempunyai akun? <a href="{% url 'registerLogin:register' %}">Buat Akun</a>
-
+  {% endblock content %}
 </div>
-</body>
-
-{% endblock content %}
