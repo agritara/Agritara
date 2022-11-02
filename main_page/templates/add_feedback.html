@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Add a Feedback</title>
+{% endblock meta %}
+
+{% block content %}  
+
+<center>
+    <h1>Add Feedback</h1>
+<center>
+
+<div class="addtodolist d-flex justify-content-center align-items-center">
+
+    <form method="POST" action="" class="d-flex flex-column">
+      {% csrf_token %}
+      <div class="form d-flex flex-column justify-content-between gap-2">
+        <label for="feedback">feedback</label>
+        <input
+          name="feedback"
+          id="feedback"
+          placeholder="feedback"
+        />
+      </div>
+      <button id="button" class="btn btn-success">Submit</button>
+    </form>
+    <center>
+        <center id="message"></center>
+    <center>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  function addFeedback() {
+    fetch("{% url 'add_feedback' %}", {
+          method: "POST",
+          body: new FormData(document.querySelector('#form'))
+      }).then(refreshFeedback)
+    return false
+  }
+
+  document.getElementById("button").onclick = addFeedback
+</script>
+
+{% endblock content %}

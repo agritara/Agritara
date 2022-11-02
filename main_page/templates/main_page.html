@@ -1,0 +1,415 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+<head>
+  <style>
+  table, th, td{
+    border: 1px solid black;
+  }
+    .tableFixHead          { overflow: auto; height: 300px; }
+    .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
+    /* Just common table stuff. Really. */
+  table  { border-collapse: collapse; width: 100%;}
+  th, td { padding: 8px 4px; }
+  th     { background:#eee; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .center {
+  margin-left: 0px;
+  margin-right: 0px;
+  }
+
+  body {
+    color: #292929;
+    font: 90% Roboto, Arial, sans-serif;
+    font-weight: 300;
+  }
+
+  p {
+    padding: 0 10px;
+    line-height: 1.8;
+  }
+
+  ul li {
+    padding-right: 10px;
+    line-height: 1.6;
+  }
+
+  h3 {
+    padding: 5px 20px;
+    margin: 0;
+  }
+
+  div#header {
+    position: relative;
+  }
+
+  div#header h1 {
+    height: 80px;
+    line-height: 80px;
+    margin: 0;
+    padding-left: 10px;
+    background: #e0e0e0;
+    color: #292929;
+  }
+
+  div#header a {
+    position: absolute;
+    right: 0;
+    top: 23px;
+    padding: 10px;
+    color: #006;
+  }
+
+  div#navigation {
+    background: #7cb71c;
+  }
+
+  div#navigation li {
+    list-style: none;
+  }
+
+  div#extra {
+    background: #147FA9;
+  }
+
+  div#footer {
+    background: #42444e;
+    color: #fff;
+  }
+
+  div#footer p {
+    padding: 20px 10px;
+  }
+
+  div#wrapper {
+    float: left;
+    width: 100%;
+    margin-left: -200px
+  }
+
+  div#content {
+    margin-left: 200px
+  }
+
+  div#navigation {
+    float: right;
+    width: 200px
+  }
+
+  div#extra {
+    float: right;
+    clear: right;
+    width: 200px
+  }
+
+  div#footer {
+    clear: both;
+    width: 100%
+  }
+  .rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color: #09f;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="">Agritara</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="petani/home/">Home Petani</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pemda/home/">Home Pemerintah Daerah</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user/">Login</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          Navbar text with an inline element
+        </span>
+      </div>
+    </nav>
+    <div id="wrapper">
+        <div id="content">
+          <h1>Kontribusi Petani</h1>
+          <div class="tableFixHead">
+            <table id="table1"></table>
+          </div>
+          <h1>Komoditas per Provinsi</h1>
+          <div class="tableFixHead">
+            <table class = "center">
+              <thead>
+                <tr>
+                  <tr class="thead-dark">
+                    <th scope="col" >Provinsi</th>
+                    <th scope="col" >Komoditas</th>
+                    <th scope="col" >Jumlah</th>
+                  </tr>
+                </tr>
+              </thead>
+            
+            {% for data in list_komod_per_prov %}
+                <tr>
+                    <th>{{data.prov}}</th>
+                    <th>{{data.comm}}</th>
+                    <th>{{data.quantity}}</th>
+                </tr>
+            {% endfor %}
+            </table>
+          </div>
+          <h1>Komoditas Provinsi</h1>
+          <div class="tableFixHead">
+            <table class = "center">
+              <thead>
+                <tr>
+                  <tr class="thead-dark">
+                    <th scope="col" >Provinsi</th>
+                    <th scope="col" >Total Komoditas</th>
+                  </tr>
+                </tr>
+              </thead>
+            
+            {% for prov,data in list_provinsi.items %}
+                <tr>
+                    <th>{{prov}}</th>
+                    <th>{{data}}</th>
+                </tr>
+            {% endfor %}
+            </table>
+          </div>
+          <h1>Total Komoditas</h1>
+          <div class="tableFixHead">
+            <table class = "center">
+              <thead>
+                <tr>
+                  <tr class="thead-dark">
+                    <th scope="col" >Komoditas</th>
+                    <th scope="col" >Total</th>
+                  </tr>
+                </tr>
+              </thead>
+            
+            {% for comm,data in list_komoditas.items %}
+                <tr>
+                    <th>{{comm}}</th>
+                    <th>{{data}}</th>
+                </tr>
+            {% endfor %}
+            </table>
+          </div>
+          <h1>Was This Website Helpful?</h1>
+          <form class="rating">
+            <label>
+              <input type="radio" name="stars" value="1" />
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+          </form>
+          <script>
+            $(':radio').change(function() {
+              console.log('New star rating: ' + this.value);
+            });
+          </script>
+          <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" href="{% url 'add_feedback' %}">Add Feedback!</a>
+          <h1>FEEDBACKS!</h1>
+          <table id="tablefb"></table>
+        </div>
+    </div>
+    
+    <script>
+    async function inputanPetani() {
+      return fetch("{% url 'get_barang_petani_json' %}").then((res) => res.json())
+    }
+
+    async function refreshWishlist() {
+          document.getElementById("table1").innerHTML = ""
+          const wishlist = await inputanPetani()
+          let htmlString = `<thead>
+                <tr>
+                  <tr class="thead-dark">
+                    <th scope="col" >Nama Petani</th>
+                    <th scope="col" >Asal Provinsi</th>
+                    <th scope="col" >Jenis Komoditas</th>
+                    <th scope="col" >Jumlah</th>
+                    <th scope="col" >Tanggal</th>
+                  </tr>
+                </tr>
+              </thead>`
+          wishlist.forEach((item) => {
+            htmlString += `\n<tr>
+            <th>${"Nama_Petani"}</th>
+            <th>${item.fields.daerah_asal}</th>
+            <th>${item.fields.nama_barang}</th>
+            <th>${item.fields.kuantitas_barang}</th>
+            <th>${item.fields.date}</th>
+          </tr>` 
+          })
+          
+          document.getElementById("table1").innerHTML = htmlString
+    }
+
+    
+      async function getFeedback() {
+      return fetch("{% url 'get_feedback_json' %}").then((res) => res.json())
+    }
+
+    async function refreshFeedback() {
+          document.getElementById("tablefb").innerHTML = ""
+          const wishlist = await getFeedback()
+          let htmlString = `<tr>
+            <th>User</th>
+            <th>Pesan</th>
+          </tr>`
+          wishlist.forEach((item) => {
+            htmlString += `\n<tr>
+            <th>${"Unknown"}</th>
+            <th>${item.fields.feedback}</th>
+          </tr>` 
+          })
+          
+          document.getElementById("tablefb").innerHTML = htmlString
+    }
+
+    $(document).ready(function(){
+      refreshWishlist();
+      refreshFeedback();
+    });
+    </script>
+    
+    <div id="navigation">
+        <p><strong>2. Navigation Menu</strong></p>
+        <h3>Styling Flex Container</h3>
+        <ul>
+            <li>flex-direction</li>
+            <li>flex-wrap</li>
+            <li>justify-content</li>
+            <li>align-content</li>
+            <li>align-items</li>
+        </ul>
+        <h3>Designing Flex Items </h3>
+        <ul>
+            <li>order</li>
+            <li>align-self</li>
+            <li>flex-grow</li>
+            <li>flex-shrink</li>
+            <li>flex-basis</li>
+        </ul>
+    </div>
+    <div id="extra">
+        <p><strong>3. Additional Stuff</strong></p>
+        <h3>In this guide you will learn:</h3>
+        <ul>
+            <li>How to use CSS Flexbox to build modern layouts</li>
+            <li>How to align items both vertically and horizontally</li>
+            <li>How to order items within container</li>
+            <li>And more</li>
+        </ul>
+    </div>
+    <div id="footer"><p>Footer</p>
+    </div>
+</div>
+<script type="text/javascript">AddFillerLink("content", "navigation", "extra")</script>
+</body> 
+
+ {% endblock content %}
