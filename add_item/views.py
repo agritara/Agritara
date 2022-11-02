@@ -6,7 +6,13 @@ from django.http import HttpResponse, HttpResponseNotFound
 
 from django.core import serializers
 
-# Create your views here.
+# from django.contrib.auth.decorators import login_required
+
+# import datetime
+# from django.http import HttpResponseRedirect
+# from django.urls import reverse
+
+# @login_required(login_url='/registerLogin/login/')
 def index(request):
     return render(request, 'add.html')
 
