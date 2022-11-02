@@ -6,11 +6,11 @@
 {% endblock meta %}
 
 {% block content %}
+<!-- <br>
 <br>
 <br>
 <br>
-<br>
-<br>
+<br> -->
 <div class = "form-group">
 
   <nav class="navbar navbar-expand-lg" style="background-color: #FECD70">
@@ -30,7 +30,25 @@
         margin: auto;
         width: 50%; 
     }
+
+    .balik {
+        background-color: #EE4B2B;
+        border: #EE4B2B;
+    }
+
+    .balik:hover {
+        background-color: #8B0000;
+        border: #8B0000;
+    }
   </style>
+
+  <script>
+    $(document).ready(() => {
+      $('.balik').click(function() {
+        window.location = '/petani/'
+      });
+    });
+  </script>
 
   <br>
 
@@ -56,6 +74,7 @@
 
         <div class="form-row">
           <div class="d-flex justify-content-center">
+            <button type="submit" value="Submit" class="btn btn-primary balik">Back</button>
             <button id="button" type="submit" value="Submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
