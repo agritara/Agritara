@@ -54,6 +54,9 @@
   $(document).ready(function() {
     {% comment %} get nama user logged in {% endcomment %}
 
+    $('.table').text('');
+    $('.table-content').text('');
+    $('#options').text('');
     $('.table').append(`
     <div class="row text-bold text-md bg-warning">
       <div class="col">
@@ -182,7 +185,7 @@
 {% block content %}
 <div class="body">
 
-  {% comment %} <nav class="navbar navbar-expand-lg bg-light fixed-top" style="--bs-bg-opacity: .7;">
+  <nav class="navbar navbar-expand-lg bg-light fixed-top" style="--bs-bg-opacity: .7;">
     <div class="container-fluid text-dark text-bold">
       <a class="navbar-brand" href="/">
         <img src="{% static "img/agritara-nav-logo.png" %}" alt="nav-logo">
@@ -208,7 +211,7 @@
         </ul>
       </div>
     </div>
-  </nav> {% endcomment %}
+  </nav>
   
   <div class="image-fluid" id="bgimg">
     <br>
@@ -218,7 +221,7 @@
     <br>
     
     <div class="container">
-      <h1 class="text-bold" align="center">PEMDA</h1>
+      <h1 class="text-bold" align="center">PEMERINTAH DAERAH</h1>
       <br>
     </div>
   </div>
