@@ -35,7 +35,7 @@ def load_page(request):
         if review == "" or review == None:
             review = '-'
 
-        OrderHistory.objects.create(item=govitem_name, item_amount=govitem_amount, review=review)
+        OrderHistory.objects.create(purchased_by=request.COOKIES.get("last_login"), item=govitem_name, item_amount=govitem_amount, review=review)
         new_qty = petaniitem.kuantitas_barang - govitem_amount
         if new_qty>0:
             BarangPetani.object.create(nama_barang=govitem_name, kuantitas_barang=new_qty, daerah_asal=petaniitem.daerah_asal, date=petaniitem.date)
@@ -47,5 +47,5 @@ def load_page(request):
 
 @login_required(login_url='/registerLogin/login/')
 def load_history(request):
-    data = OrderHistory.objects.filter(user=request.COOKIES.get("last_login"))
+    data = OrderHistory.objects.filter(purchased_by=request.COOKIES.get("last_login"))
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
