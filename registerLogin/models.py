@@ -45,5 +45,5 @@ PROVINSI =(
 class RegisterLogin(models.Model):
     username = models.CharField(max_length=50)
     user_type = models.CharField(max_length=6, choices=TIPE_USER, default='petani')
-    provinsi = models.CharField(max_length=38, choices=TIPE_USER, default='Aceh')
+    provinsi = models.CharField(max_length=38, choices=PROVINSI, default='Aceh')
     password = models.CharField(max_length=30)
