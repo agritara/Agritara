@@ -4,7 +4,6 @@ from add_item.models import BarangPetani
 
 from django.http import HttpResponse, HttpResponseNotFound
 
-
 from django.core import serializers
 
 # Create your views here.
