@@ -22,7 +22,7 @@ def add_governments_request(request):
     if request.method == "POST":
         form_request= request_form(request.POST or None, request.FILES or None)
         if form_request.is_valid():
-            req_pemerintah = GovReqItem()
+            req_pemerintah = form_request.save(commit=False)
             req_pemerintah.request = form_request.cleaned_data['request']
             req_pemerintah.kuantitas_req = form_request.cleaned_data['kuantitas_req']
             # request = form_request.save(commit=False)
