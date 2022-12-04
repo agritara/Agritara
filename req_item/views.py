@@ -15,7 +15,7 @@ def governments_request_page(request):
         'list_request':Gov_request,
     }
     response = {'Gov_request':Gov_request}
-    return render(request, 'government_request_page.html', context, response)
+    return render(request, 'government_request_page.html', context, response) 
 
 def add_governments_request(request):
     form_request = request_form() 
@@ -25,8 +25,8 @@ def add_governments_request(request):
             req_pemerintah = form_request.save(commit=False)
             req_pemerintah.request = form_request.cleaned_data['request']
             req_pemerintah.kuantitas_req = form_request.cleaned_data['kuantitas_req']
-            form_request.save()
-            response = HttpResponseRedirect('/pemda')
+            form_request.save() 
+            response = HttpResponseRedirect('/pemda/home') 
             return response
 
     context = {'form_request':form_request,
