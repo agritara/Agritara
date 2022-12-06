@@ -58,7 +58,7 @@ def login_user(request):
         if user is not None:
             print("check")
             login(request, user) # melakukan login terlebih dahulu
-            response = HttpResponseRedirect(reverse("registerLogin:show_registerlogin")) # membuat response
+            response = HttpResponseRedirect("") # membuat response
             response.set_cookie('last_login', str(datetime.datetime.now())) 
             return response
         else:
