@@ -9,6 +9,10 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from registerLogin.forms import RegisLogForm
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login as auth_login
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
@@ -16,35 +20,24 @@ def register(request):
     if request.method == "POST":
         form = RegisLogForm(request.POST)
         if form.is_valid():
-            
-            #data_register_login = RegisterLogin.objects.all()
-            # username = request.POST.get('username')
-            # password = request.POST.get('password')
-            # user_type = request.POST.get('user_type')
-            # provinsi = request.POST.get('provinsi')
-            # buatAkun = RegisterLogin.objects.create(
-            #     username = username,
-            #     password = password,
-            #     user_type = user_type,
-            #     provinsi = provinsi
-            #     )
             form.save()
-            # if user_type == "PEMDA" or user_type == "pemda":
-            #     for user in data_register_login:
-            #         print(user.provinsi)
-            #         if user.user_type == "PEMDA" or user.user_type == "pemda":
-            #             if user.provinsi == provinsi:
-            #                 print("gagal")
-            #                 return redirect('registerLogin:register')
-            # form.save()
-            # RegisterLogin.objects.create(username = username, password = password,user_type = user_type,provinsi = provinsi)
-            #new_user.save()
             messages.success(request, 'Akun telah berhasil dibuat!')    
-            # user = authenticate(request, user_type=user_type, provinsi=provinsi)
             print("berhasil")
             return redirect('registerLogin:login')
     
 
+    context = {'form':form}
+    return render(request, 'register.html', context)
+
+def register_Flutter(request):
+    form = RegisLogForm()
+    if request.method == "POST":
+        form = RegisLogForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Akun telah berhasil dibuat!')    
+            print("berhasil")
+            return JsonResponse('username')
     context = {'form':form}
     return render(request, 'register.html', context)
 
@@ -73,3 +66,30 @@ def show_registerlogin(request):
     'last_login': request.COOKIES['last_login'],
 }
     return render(request, "baru.html")
+
+
+@csrf_exempt
+def login_flutter(request):
+     username = request.POST['username']
+     password = request.POST['password']
+     user = authenticate(username=username, password=password)
+     if user is not None:
+         if user.is_active:
+             auth_login(request, user)
+             # Redirect to a success page.
+             return JsonResponse({
+               "status": True,
+               "message": "Successfully Logged In!"
+               # Insert any extra data if you want to pass data to Flutter
+             }, status=200)
+         else:
+             return JsonResponse({
+               "status": False,
+               "message": "Failed to Login, Account Disabled."
+             }, status=401)
+
+     else:
+         return JsonResponse({
+           "status": False,
+           "message": "Failed to Login, check your email/password."
+         }, status=401)
