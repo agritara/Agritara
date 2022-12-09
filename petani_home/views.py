@@ -21,17 +21,25 @@ def show_as_json(request):
     # barang_filtered = list_barang.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", list_barang), content_type="application/json")
 
+@login_required(login_url='/registerLogin/login/')
 def show_barang_petani(request):
     list_barang = BarangPetani.objects.all()
     # barang_filtered = list_barang.filter(user=request.user)
     context = {
-        'list_barang': list_barang
+        'list_barang': list_barang,
+        'last_login': request.COOKIES['last_login'],
     }
     return render(request, 'homepetani.html', context)
 
+@login_required(login_url='/registerLogin/login/')
 def get_data_json_from_tambah(request):
     list_barang = BarangPetani.objects.all()
 
     # barang_filtered = list_barang.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", list_barang), content_type="application/json")
 
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('registerLogin:login'))
+    response.delete_cookie('last_login')
+    return response

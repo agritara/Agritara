@@ -47,7 +47,7 @@ PROVINSI = [
     ('Papua Selatan','PAPUA SELATAN'),
 ]
 
-class RegisLogForm( UserCreationForm):
+class RegisLogForm(UserCreationForm):
     user_type = forms.CharField(label="user type",widget = forms.Select(choices=TIPE_USER))
     provinsi = forms.CharField(label="provinsi",widget =  forms.Select(choices=PROVINSI))
     class Meta:
