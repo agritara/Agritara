@@ -30,25 +30,6 @@ def register(request):
     context = {'form':form}
     return render(request, 'register.html', context)
 
-def register_flutter(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-
-        username = data["username"]
-        email = data["email"]
-        password1 = data["password1"]
-
-        newUser = RegisterLogin.objects.create_user(
-        username = username, 
-        email = email,
-        password = password1,
-        )
-
-        newUser.save()
-        return JsonResponse({"status": "success"}, status=200)
-    else:
-        return JsonResponse({"status": "error"}, status=401)
-
 def login_user(request): 
     print("berhasil")
     if request.method == 'POST':
@@ -101,3 +82,22 @@ def login_flutter(request):
            "status": False,
            "message": "Failed to Login, check your email/password."
          }, status=401)
+
+def register_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        username = data["username"]
+        email = data["email"]
+        password1 = data["password1"]
+
+        newUser = RegisterLogin.objects.create_user(
+        username = username, 
+        email = email,
+        password = password1,
+        )
+
+        newUser.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
