@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from registerLogin.models import RegisterLogin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
@@ -101,3 +101,17 @@ def register_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def logoutFlutter(request):
+    try:
+        logout(request)
+        return JsonResponse({
+                    "status": True,
+                    "message": "Successfully Logged out!"
+                }, status=200)
+    except:
+        return JsonResponse({
+          "status": False,
+          "message": "Failed to Logout"
+        }, status=401)
