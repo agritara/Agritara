@@ -88,12 +88,10 @@ def register_flutter(request):
         data = json.loads(request.body)
 
         username = data["username"]
-        email = data["email"]
         password1 = data["password1"]
 
         newUser = RegisterLogin.objects.create_user(
         username = username, 
-        email = email,
         password = password1,
         )
 
