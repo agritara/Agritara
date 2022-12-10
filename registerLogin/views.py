@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -29,17 +30,24 @@ def register(request):
     context = {'form':form}
     return render(request, 'register.html', context)
 
-def register_Flutter(request):
-    form = RegisLogForm()
-    if request.method == "POST":
-        form = RegisLogForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Akun telah berhasil dibuat!')    
-            print("berhasil")
-            return JsonResponse('username')
-    context = {'form':form}
-    return render(request, 'register.html', context)
+def register_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        username = data["username"]
+        email = data["email"]
+        password1 = data["password1"]
+
+        newUser = RegisterLogin.objects.create_user(
+        username = username, 
+        email = email,
+        password = password1,
+        )
+
+        newUser.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 
 def login_user(request): 
     print("berhasil")
