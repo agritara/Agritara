@@ -83,6 +83,7 @@ def login_flutter(request):
            "message": "Failed to Login, check your email/password."
          }, status=401)
 
+@csrf_exempt
 def register_flutter(request):
     if request.method == 'POST':
         data = json.loads(request.body)
