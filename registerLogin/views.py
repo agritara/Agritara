@@ -67,12 +67,12 @@ def login_flutter(request):
              auth_login(request, user)
              return JsonResponse({
                "status": True,
-               "message": "Successfully Logged In!"
+               "message": "Anda Berhasil Login!"
              }, status=200)
          else:
              return JsonResponse({
                "status": False,
-               "message": "Failed to Login, Account Disabled."
+               "message": "Anda Tidak berhasil login :("
              }, status=401)
 
      else:
@@ -109,10 +109,10 @@ def logout_Flutter(request):
         logout(request)
         return JsonResponse({
                     "status": True,
-                    "message": "Successfully Logged out!"
+                    "message": "Logout berhasil"
                 }, status=200)
     except:
         return JsonResponse({
           "status": False,
-          "message": "Failed to Logout"
+          "message": "Logout gagal"
         }, status=401)
