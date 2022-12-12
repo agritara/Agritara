@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.views.decorators.csrf import csrf_exempt
 
 def governments_request_page(request):
     Gov_request = GovReqItem.objects.all()
@@ -17,6 +18,7 @@ def governments_request_page(request):
     response = {'Gov_request':Gov_request}
     return render(request, 'government_request_page.html', context, response)
 
+@csrf_exempt
 def add_governments_request(request):
     form_request = request_form() 
     if request.method == "POST":
