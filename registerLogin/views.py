@@ -65,11 +65,9 @@ def login_flutter(request):
      if user is not None:
          if user.is_active:
              auth_login(request, user)
-             # Redirect to a success page.
              return JsonResponse({
                "status": True,
                "message": "Successfully Logged In!"
-               # Insert any extra data if you want to pass data to Flutter
              }, status=200)
          else:
              return JsonResponse({
@@ -90,10 +88,14 @@ def register_flutter(request):
 
         username = data["username"]
         password1 = data["password1"]
+        peran = data['peran']
+        daerah = data['daerah']
 
         newUser = RegisterLogin.objects.create_user(
         username = username, 
         password = password1,
+        tipe_user = peran,
+        daerah_user = daerah,
         )
 
         newUser.save()
