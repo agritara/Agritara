@@ -6,6 +6,8 @@ from django.http import HttpResponse, HttpResponseNotFound
 
 from django.core import serializers
 
+from django.views.decorators.csrf import csrf_exempt
+
 # from django.contrib.auth.decorators import login_required
 
 # import datetime
@@ -20,6 +22,7 @@ def get_barang_petani_json(request):
     barang_petani = BarangPetani.objects.all()
     return HttpResponse(serializers.serialize('json', barang_petani))
 
+@csrf_exempt
 def add_barang_petani(request):
     if request.method == 'POST':
         nama_barang = request.POST.get("nama_barang")
