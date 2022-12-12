@@ -17,7 +17,7 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
-@login_required(login_url='/registerLogin/login/')
+# @login_required(login_url='/registerLogin/login/')
 def load_page(request):
     if request.method == "POST":
         # uid = request.user.id
@@ -45,7 +45,7 @@ def load_page(request):
 
     return render(request, 'pemda_home.html')
 
-@login_required(login_url='/registerLogin/login/')
+# @login_required(login_url='/registerLogin/login/')
 def load_history(request):
     data = OrderHistory.objects.filter(purchased_by=request.COOKIES.get("last_login"))
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
