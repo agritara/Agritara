@@ -1,14 +1,19 @@
+import json
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from registerLogin.models import RegisterLogin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from registerLogin.forms import RegisLogForm
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login as auth_login
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
@@ -16,31 +21,8 @@ def register(request):
     if request.method == "POST":
         form = RegisLogForm(request.POST)
         if form.is_valid():
-            
-            #data_register_login = RegisterLogin.objects.all()
-            # username = request.POST.get('username')
-            # password = request.POST.get('password')
-            # user_type = request.POST.get('user_type')
-            # provinsi = request.POST.get('provinsi')
-            # buatAkun = RegisterLogin.objects.create(
-            #     username = username,
-            #     password = password,
-            #     user_type = user_type,
-            #     provinsi = provinsi
-            #     )
             form.save()
-            # if user_type == "PEMDA" or user_type == "pemda":
-            #     for user in data_register_login:
-            #         print(user.provinsi)
-            #         if user.user_type == "PEMDA" or user.user_type == "pemda":
-            #             if user.provinsi == provinsi:
-            #                 print("gagal")
-            #                 return redirect('registerLogin:register')
-            # form.save()
-            # RegisterLogin.objects.create(username = username, password = password,user_type = user_type,provinsi = provinsi)
-            #new_user.save()
             messages.success(request, 'Akun telah berhasil dibuat!')    
-            # user = authenticate(request, user_type=user_type, provinsi=provinsi)
             print("berhasil")
             return redirect('registerLogin:login')
     
@@ -58,7 +40,7 @@ def login_user(request):
         if user is not None:
             print("check")
             login(request, user) # melakukan login terlebih dahulu
-            response = HttpResponseRedirect(reverse("registerLogin:show_registerlogin")) # membuat response
+            response = HttpResponseRedirect("") # membuat response
             response.set_cookie('last_login', str(datetime.datetime.now())) 
             return response
         else:
@@ -73,3 +55,64 @@ def show_registerlogin(request):
     'last_login': request.COOKIES['last_login'],
 }
     return render(request, "baru.html")
+
+
+@csrf_exempt
+def login_flutter(request):
+     username = request.POST['username']
+     password = request.POST['password']
+     user = authenticate(username=username, password=password)
+     if user is not None:
+         if user.is_active:
+             auth_login(request, user)
+             return JsonResponse({
+               "status": True,
+               "message": "Successfully Logged In!"
+             }, status=200)
+         else:
+             return JsonResponse({
+               "status": False,
+               "message": "Failed to Login, Account Disabled."
+             }, status=401)
+
+     else:
+         return JsonResponse({
+           "status": False,
+           "message": "Failed to Login, check your email/password."
+         }, status=401)
+
+@csrf_exempt
+def register_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        username = data["username"]
+        password1 = data["password1"]
+        peran = data['peran']
+        daerah = data['daerah']
+
+        newUser = RegisterLogin.objects.create_user(
+        username = username, 
+        password = password1,
+        tipe_user = peran,
+        daerah_user = daerah,
+        )
+
+        newUser.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def logout_Flutter(request):
+    try:
+        logout(request)
+        return JsonResponse({
+                    "status": True,
+                    "message": "Successfully Logged out!"
+                }, status=200)
+    except:
+        return JsonResponse({
+          "status": False,
+          "message": "Failed to Logout"
+        }, status=401)

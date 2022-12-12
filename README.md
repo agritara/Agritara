@@ -1,10 +1,10 @@
 1. Anggota kelompok:
-- Fauzan Firzandy Khifzan (2106702756) 
-- Alyssa Larasati (2106656125) 
-- Akbar Firdaus (2106651856) 
-- Alifio Fathan Haryanto (2106653483) 
-- Bintang Pratama (2106751373)
-- Arya Daniswara Khairan (2106702781)
+- Fauzan Firzandy Khifzan (2106702756) - Home page
+- Alyssa Larasati (2106656125) - Login
+- Akbar Firdaus (2106651856) - Form pesan di petani (add_item)
+- Alifio Fathan Haryanto (2106653483) - Form pesan di pemda (req_item)
+- Bintang Pratama (2106751373) - Home petani
+- Arya Daniswara Khairan (2106702781) - Home pemda
 
 2. Tautan aplikasi Heroku: http://agritara.herokuapp.com/
 
